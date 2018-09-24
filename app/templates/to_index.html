@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagina não encontrada</title>
+</head>
+<body>
+    {% if not login %}
+    <header>Página não encontrada!</header>
+    {% else %}
+    <header>Login inválido!</header>
+    {% endif %}
+        <ul><a href="/">Voltar para início</a></ul>
+</body>
+</html>

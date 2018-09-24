@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <center>
+    <body>
+        <header>
+            <h1>{{username}}</h1>
+            {% if  picture != None %}
+            <img src="data:image/png;base64,{{picture}}" width="300px" height="200px">
+            {% endif %}
+        </header>
+        <nav>
+            <ul>
+                {% if not follow %}
+                <li><a href="/follow">Seguir</a></li>
+                {% else %}
+                <li><a href="/unfollow">Deseguir</a></li>
+                {% endif %}
+                <li><a href="#">Ver Playlists</a></li>
+            </ul>
+        </nav>
+    </body>
+    </center>
+</html>
