@@ -1,9 +1,7 @@
-<html>
-    <head>
-        <meta charset="utf-8"/>
-    </head>
-    <body>
-        <header>
+{% extends 'main.html' %}
+
+{% block content %}
+        <section class="musics">
             <h1>Playlist: {{ playlist.name }}</h1>
             <p>Publisher: {{ playlist.publisher.name }}</p>
             {% if playlist.musics != None %}
@@ -14,6 +12,8 @@
             </div>
             {% endfor %}
             {% endif %}
+        </section>
+        <section class="add-music">
             <form method="POST" action="/playlists/{{ playlist.code }}/music/add" enctype="multipart/form-data">
                 <label for="name">Digite o nome da musica: </label>
                 <input type="text" name="name" required />
@@ -32,6 +32,5 @@
                 <br/>
                 <input type="submit" value="Adicionar musica a playlist"/>
             </form>
-        </header>
-    </body>
-</html>
+            </section>
+{% endblock %}

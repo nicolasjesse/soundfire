@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pagina não encontrada</title>
-</head>
-<body>
+{% extends 'main.html' %}
+
+{% block content %}
     {% if not login %}
-    <header>Página não encontrada!</header>
+    <h1>Página não encontrada!</h1>
     {% else %}
-    <header>Login inválido!</header>
+    <h1>Login inválido!</h1>
     {% endif %}
-        <ul><a href="/">Voltar para início</a></ul>
-</body>
-</html>
+        <a href="/">Voltar para início</a>
+{% endblock %}

@@ -1,15 +1,12 @@
-<html>
-    <head>
-        <meta charset="utf-8"/>
-    </head>
-    <body>
-        <header>
-            <h1>Adicionar Playlist</h1>
-        </header>
-        <form method="POST" action="/playlists/add">
-            <label for="name">Escreva um nome para sua playlist:</label>
-            <input type="text" name="name" placeholder="Escreva um nome para sua playlist:" required/>
-            <input type="submit" value="Criar Playlist" />
-        </form>
-    </body>
-</html>
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="title">
+    <h1>Adicionar Playlist</h1>
+</div>
+<form method="POST" action="/playlists/add">
+    <label for="name">Escreva um nome para sua playlist:</label>
+    <input type="text" name="name" placeholder="Escreva um nome para sua playlist:" required/>
+    <input type="submit" value="Criar Playlist" />
+</form>
+{% endblock %}
