@@ -3,8 +3,18 @@ from app import app
 from app.infra.AdminRepo import AdminRepo
 from app.infra.ListenerRepo import ListenerRepo
 from app.infra.FollowersRepo import FollowersRepo
+from app.infra.PlaylistRepo import PlaylistRepo
+from app.infra.PlaylistMusicRepo import PlaylistMusicRepo
+from app.infra.MusicRepo import MusicRepo
+from app.infra.GenreRepo import GenreRepo
+from app.infra.MusicGenreRepo import MusicGenreRepo
+from app.infra.PlaylistMusicRepo import PlaylistMusicRepo
 from app.models.Admin import Admin
+from app.models.Profile import Profile
 from app.models.Listener import Listener
+from app.models.Playlist import Playlist
+from app.models.Music import Music
+from app.models.Genre import Genre
 import base64
 import ast
 
@@ -12,7 +22,12 @@ import ast
 admin_repo = AdminRepo()
 listener_repo = ListenerRepo()
 followers_repo = FollowersRepo()
-
+playlist_repo = PlaylistRepo()
+playlist_music_repo = PlaylistMusicRepo()
+genre_repo = GenreRepo()
+music_repo = MusicRepo()
+music_genre_repo = MusicGenreRepo()
+playlist_music_repo = PlaylistMusicRepo()
 
 @app.route("/")
 def index():
@@ -72,7 +87,7 @@ def show_user_profile(code):
         if admin.code == code:
             return render_template("user.html", username=admin.name, picture=admin.picture,
                                    follow=(user.code in followers))
-    return "Inexistente"
+    return "Usuário Inexistente!"
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -121,15 +136,46 @@ def unfollow():
     return redirect("/user/%d" % session["user_visited"])
 
 
-@app.route("/upload-music", methods=["GET", "POST"])
-def upload_teste():
+@app.route("/playlists", methods=["GET", "POST"])
+def playlists():
     if request.method == "GET":
-        return render_template("upload-music.html")
-    fmusic = request.files["music"]
-    music = base64.b64encode(fmusic.read()).decode('utf-8').replace('\n', '')
-    return "<html style='background-color: black; text-align: center'><body><h1 style='background-color: gray'>Playli" \
-           "st Aleatoria </h1><audio style='width:80%' controls src='data:audio/mp3;base64," + music + "'/></body></h" \
-                                                                                                       "tml>"
+        playlists = playlist_repo.get_playlists()
+        return render_template("playlists.html", playlists=playlists)
+
+@app.route("/playlists/<int:code>")
+def playlist(code):
+    playlist = playlist_repo.get_playlist(code)
+    playlist.musics = playlist_music_repo.get_playlist_musics(code)
+    genres = genre_repo.get_genres()
+    return render_template("playlist.html", playlist=playlist, genres=genres)
+
+
+@app.route("/playlists/add", methods=["GET", "POST"])
+def add_playlist():
+    if request.method == "POST":
+        name = request.form["name"]
+        publisher = listener_repo.get_listener(session["user"])
+        if publisher is None:
+            publisher = admin_repo.get_admin(session["user"])
+        playlist_repo.add_playlist(Playlist(0, name, publisher))
+        return redirect("/playlists")
+    return render_template("add_playlist.html")
+
+
+@app.route("/playlists/<int:code>/music/add", methods=["POST"])
+def add_music_playlist(code):
+    name = request.form["name"]
+    artist = request.form["artist"]
+    genre = request.form["genre"]
+    music_file = request.files["music"]
+    content = ""
+    if music_file is not None:
+        content = base64.b64encode(music_file.read()).decode('utf-8').replace('\n', '')
+    music_repo.add_music(Music(0, name, artist, content))
+    music = music_repo.get_music(name, artist)
+    music_genre_repo.add_music_genre(music.code, genre)
+    playlist_music_repo.add_playlist_music(code, music.code)
+    return redirect("/playlists/%d" % code)
 
 
 @app.errorhandler(404)

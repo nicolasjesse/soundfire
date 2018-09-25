@@ -4,6 +4,7 @@ class Music:
         self.__name = name
         self.__artist = artist
         self.__content = content
+        self.__genre = None
 
     @property
     def code(self):
@@ -16,6 +17,10 @@ class Music:
     @property
     def artist(self):
         return self.__artist
+
+    @property
+    def genre(self):
+        return self.__genre
 
     @property
     def content(self):
@@ -32,6 +37,10 @@ class Music:
     @artist.setter
     def artist(self, new_artist):
         self.__artist = new_artist
+
+    @genre.setter
+    def genre(self, new_genre):
+        self.__genre = new_genre
 
     @content.setter
     def content(self, new_content):

@@ -37,11 +37,19 @@ CREATE TABLE playlist_music (
     FOREIGN KEY (music) REFERENCES music(code)
 );
 
-CREATE TABLE playlist_genre (
-    playlist BIGINT,
+-- CREATE TABLE playlist_genre (
+--     playlist BIGINT,
+--     genre BIGINT,
+--     PRIMARY KEY (playlist, genre),
+--     FOREIGN KEY (playlist) REFERENCES playlist(code),
+--     FOREIGN KEY (genre) REFERENCES genre(code)
+-- );
+
+CREATE TABLE music_genre (
+    music BIGINT,
     genre BIGINT,
-    PRIMARY KEY (playlist, genre),
-    FOREIGN KEY (playlist) REFERENCES playlist(code),
+    PRIMARY KEY (music, genre),
+    FOREIGN KEY (music) REFERENCES music(code),
     FOREIGN KEY (genre) REFERENCES genre(code)
 );
 
@@ -60,3 +68,10 @@ CREATE TABLE liked_playlists (
     FOREIGN KEY (profile) REFERENCES profile(code)
 );
 
+INSERT INTO genre (description) VALUES ('Rock');
+INSERT INTO genre (description) VALUES ('Pop');
+INSERT INTO genre (description) VALUES ('Sertanejo');
+INSERT INTO genre (description) VALUES ('Funk');
+INSERT INTO genre (description) VALUES ('Tech');
+INSERT INTO genre (description) VALUES ('Metal');
+INSERT INTO genre (description) VALUES ('Reggae');

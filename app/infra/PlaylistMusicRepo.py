@@ -1,4 +1,6 @@
 from app.infra import DatabaseConnection as db
+from app.models.Music import Music
+from app.models.Genre import Genre
 
 
 class PlaylistMusicRepo:
@@ -24,16 +26,20 @@ class PlaylistMusicRepo:
             return False
     
     def get_playlist_musics(self, playlist_code):
-        get_sql = """SELECT code, name, artist, content FROM music m JOIN playlist_music pm 
-                    ON pm.music = m.code WHERE pm.playlist = '%d'"""
+        get_sql = """SELECT m.code, m.name, m.artist, m.content, g.code, g.description FROM music m JOIN playlist_music pm 
+                    ON pm.music = m.code JOIN music_genre mg ON m.code = mg.music JOIN genre g
+                    ON g.code = mg.genre WHERE pm.playlist = '%d'"""
         music_list = []
         try:
             cursor = self.__connection.cursor()
             cursor.execute(get_sql % playlist_code)
             results = cursor.fetchall()
             for result in results:
-                music_list.append( Music(result[0], result[1], result[2], result[3]))
+                music = Music(result[0], result[1], result[2], result[3])
+                music.genre = Genre(result[4], result[5])
+                music_list.append(music)
         except Exception as error:
+            print(error)
             raise("Error: {0}".format(error))
         finally:
             return music_list

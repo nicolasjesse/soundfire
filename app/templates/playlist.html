@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <header>
+            <h1>Playlist: {{ playlist.name }}</h1>
+            <p>Publisher: {{ playlist.publisher.name }}</p>
+            {% if playlist.musics != None %}
+            {% for music in playlist.musics %}
+            <div class="music">
+                <h2>{{ music.name }}</h2>
+                <audio controls src="data:audio/mp3;base64,{{ music.content }}"></audio>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <form method="POST" action="/playlists/{{ playlist.code }}/music/add" enctype="multipart/form-data">
+                <label for="name">Digite o nome da musica: </label>
+                <input type="text" name="name" required />
+                <br/>
+                <label for="artist">Digite o nome do Artista ou Banda: </label>
+                <input type="text" name="artist" required />
+                <br/>
+                <label for="genre">Escolha o genero no qual a musica mais se adequa: </label>
+                <select name="genre" required>
+                    {% for genre in genres %}
+                    <option value="{{ genre.code }}">{{ genre.description }}</option>
+                    {% endfor %}
+                </select>
+                <br/>
+                <input type="file" name="music" accept="audio/*" required />
+                <br/>
+                <input type="submit" value="Adicionar musica a playlist"/>
+            </form>
+        </header>
+    </body>
+</html>

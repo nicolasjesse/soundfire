@@ -1,5 +1,5 @@
 from app.infra import DatabaseConnection as db
-
+from app.models.Music import Music
 
 class MusicRepo:
     def __init__(self):
@@ -46,12 +46,25 @@ class MusicRepo:
         finally:
             return music_list
 
-    def get_music(self, music_code):
+    def get_music_by_code(self, music_code):
         get_sql = "SELECT code, name, artist, content FROM music WHERE code = '%d'"
         music = None
         try:
             cursor = self.__connection.cursor()
             cursor.execute(get_sql % music_code)
+            result = cursor.fetchone()
+            music = Music(result[0], result[1], result[2], result[3])
+        except Exception as error:
+            raise("Error: {0}".format(error))
+        finally:
+            return music
+
+    def get_music(self, name, artist):
+        get_sql = "SELECT code, name, artist, content FROM music WHERE name ILIKE '%s' AND artist ILIKE '%s'"
+        music = None
+        try:
+            cursor = self.__connection.cursor()
+            cursor.execute(get_sql % (name, artist))
             result = cursor.fetchone()
             music = Music(result[0], result[1], result[2], result[3])
         except Exception as error:

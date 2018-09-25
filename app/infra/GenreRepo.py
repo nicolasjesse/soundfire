@@ -1,4 +1,5 @@
 from app.infra import DatabaseConnection as db
+from app.models.Genre import Genre 
 
 
 class GenreRepo:
@@ -51,7 +52,7 @@ class GenreRepo:
         genre = None
         try:
             cursor = self.__connection.cursor()
-            cursor.execute(get_sql % genre_code))
+            cursor.execute(get_sql % genre_code)
             result = cursor.fetchone()
             genre = Genre(result[0], result[1])
         except Exception as error:

@@ -1,8 +1,7 @@
 class Playlist:
-    def __init__(self, code, name, genre, publisher):
+    def __init__(self, code, name, publisher):
         self.__code = code
         self.__name = name
-        self.__genre = genre
         self.__publisher = publisher
         self.__musics = []
 
@@ -13,10 +12,6 @@ class Playlist:
     @property
     def name(self):
         return self.__name
-
-    @property
-    def genre(self):
-        return self.__genre
 
     @property
     def publisher(self):
@@ -34,9 +29,9 @@ class Playlist:
     def name(self, new_name):
         self.__name = new_name
 
-    @genre.setter
-    def genre(self, new_genre):
-        self.__genre = new_genre
+    @musics.setter
+    def musics(self, new_musics):
+        self.__musics = new_musics
 
     @publisher.setter
     def publisher(self, new_publisher):
