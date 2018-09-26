@@ -88,7 +88,7 @@ def show_user_profile(code):
         if admin.code == code:
             return render_template("user.html", username=admin.name, picture=admin.picture,
                                    follow=(user.code in followers))
-    return "Usuário Inexistente!"
+    return render_template("to_index", login=False)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -144,14 +144,14 @@ def playlists():
         if user is None:
             user = listener_repo.get_listener(session["user"])
         playlists = playlist_repo.get_playlists_by_usercode(user.code)
-        return render_template("playlists.html", playlists=playlists)
+        return render_template("playlists.html", playlists=playlists, visiting=False)
 
 
 @app.route("/user/playlists", methods=["GET", "POST"])
 def visit_playlists():
     if request.method == "GET":
         playlists = playlist_repo.get_playlists_by_usercode(session["user_visited"])
-        return render_template("playlists.html", playlists=playlists)
+        return render_template("playlists.html", playlists=playlists, visiting=True)
 
 @app.route("/playlists/")
 def to_playlists():
@@ -193,6 +193,22 @@ def add_music_playlist(code):
     playlist_music_repo.add_playlist_music(code, music.code)
     return redirect("/playlists/%d" % code)
 
+
+@app.route("/search")
+def search():
+    return render_template("search.html")
+
+
+@app.route("/searching", methods=["POST"])
+def searching():
+    name = request.form["name"]
+    listeners = listener_repo.get_listeners()
+    listeners_searched = []
+    for listener in listeners:
+        if name in listener.name:
+            listeners_searched.append(listener)
+    users = listeners_searched
+    return render_template("founded.html", users=users)
 
 @app.errorhandler(404)
 def page_not_found(error):

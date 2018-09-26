@@ -2,17 +2,12 @@
 
 {% block content %}
         <div class="title">
-            <h1>Playlists</h1>
+            <h1>Usuários encontrados</h1>
         </div>
-        {% if not visiting %}
-        <button><a href="/playlists/add">Adicionar Playlist</a></button>
-        {% else %}
-        {% endif %}
+        {% for user in users %}
         <br/><br/>
-        {% for playlist in playlists %}
         <div class="playlist-card">
-            <h2><a href="/playlists/{{ playlist.code }}">{{ playlist.name }}</a></h2>
-            <p>Publisher: {{ playlist.publisher.name }}</p>
+            <h2><a href="/user/{{ user.code }}">{{ user.name }}</a></h2>
         </div>
         {% endfor %}
 
