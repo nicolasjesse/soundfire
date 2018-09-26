@@ -29,6 +29,7 @@ music_repo = MusicRepo()
 music_genre_repo = MusicGenreRepo()
 playlist_music_repo = PlaylistMusicRepo()
 
+
 @app.route("/")
 def index():
     if session:
@@ -141,6 +142,12 @@ def playlists():
     if request.method == "GET":
         playlists = playlist_repo.get_playlists()
         return render_template("playlists.html", playlists=playlists)
+
+
+@app.route("/playlists/")
+def to_playlists():
+    return redirect("/playlists")
+
 
 @app.route("/playlists/<int:code>")
 def playlist(code):
