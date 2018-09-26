@@ -76,6 +76,8 @@ def show_user_profile(code):
     user = admin_repo.get_admin(session["user"])
     if user is None:
         user = listener_repo.get_listener(session["user"])
+    if user.code == code:
+        return redirect("/home")
     session["user_visited"] = code
     followers = followers_repo.get_followers(session["user_visited"])
     listeners = listener_repo.get_listeners()
@@ -209,6 +211,7 @@ def searching():
             listeners_searched.append(listener)
     users = listeners_searched
     return render_template("founded.html", users=users)
+
 
 @app.errorhandler(404)
 def page_not_found(error):
