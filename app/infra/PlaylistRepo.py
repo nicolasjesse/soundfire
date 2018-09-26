@@ -60,3 +60,18 @@ class PlaylistRepo:
             raise("Error {0}".format(error))
         finally:
             return playlist
+
+    def get_playlists_by_usercode(self, user_code):
+        get_sql = "SELECT pl.code, pl.name, pr.code, pr.name, pr.email, pr.picture FROM playlist pl JOIN profile pr ON pl.publisher = pr.code WHERE pr.code = '%d'"
+        playlists_list = []
+        try:
+            cursor = self.__connection.cursor()
+            cursor.execute(get_sql % user_code)
+            results = cursor.fetchall()
+            for result in results:
+                playlists_list.append(
+                    Playlist(result[0], result[1], Profile(result[2], result[3], result[4], None, result[5])))
+        except Exception as error:
+            raise ("Error: {0}".format(error))
+        finally:
+            return playlists_list

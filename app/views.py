@@ -140,9 +140,18 @@ def unfollow():
 @app.route("/playlists", methods=["GET", "POST"])
 def playlists():
     if request.method == "GET":
-        playlists = playlist_repo.get_playlists()
+        user = admin_repo.get_admin(session["user"])
+        if user is None:
+            user = listener_repo.get_listener(session["user"])
+        playlists = playlist_repo.get_playlists_by_usercode(user.code)
         return render_template("playlists.html", playlists=playlists)
 
+
+@app.route("/user/playlists", methods=["GET", "POST"])
+def visit_playlists():
+    if request.method == "GET":
+        playlists = playlist_repo.get_playlists_by_usercode(session["user_visited"])
+        return render_template("playlists.html", playlists=playlists)
 
 @app.route("/playlists/")
 def to_playlists():
