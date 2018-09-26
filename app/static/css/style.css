@@ -5,4 +5,88 @@ body {
     color: white;
     background-image: url("../img/background.jpg");
     background-repeat: round;
+    text-align: center;
+}
+
+header {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+header li {
+    display: inline-block;
+    text-decoration: none;
+    padding: 1%;
+}
+
+.logo {
+    padding-top: 0.5%;
+    max-width: 45px;
+}
+
+button, input, select, option {
+    text-align: center !important;
+    text-align-last:center;
+    margin: 0.5%;
+    width: 40%;
+    height: 6%;
+    color: white !important;
+    font-size: 1.1em;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+button {
+    text-transform: uppercase;
+    font-weight: 700;
+    width: 20%;
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+button a {
+    text-decoration: none !important;
+    color: white;
+}
+
+div.perfil img {
+    border-radius: 50%;
+    width: 20%;
+    height: 40%;
+    box-shadow: 8px 8px rgba(0, 0, 0, 0.4);
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+nav ul li {
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0.25%;
+    padding: 1%;
+    width: 20%;
+    box-shadow: 3px 3px rgba(255, 255, 255, 0.2);
+    background-color: rgba(50, 10, 0, 0.8);
+    text-decoration: none;
+    display: inline-block;
+    color: white;   
+}
+
+.playlist-card {
+    width: 20%;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.playlist-card a {
+    color:black;
+    font-size: 1.2em;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 2px 2px grey;
+}
+
+audio {
+    width: 40%;
 }

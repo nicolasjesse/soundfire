@@ -4,11 +4,20 @@
         <div class="title">
             <h1>Playlists</h1>
         </div>
-        <a href="/playlists/add">Adicionar Playlist</a>
+        <button><a href="/playlists/add">Adicionar Playlist</a></button>
+        <br/><br/>
         {% for playlist in playlists %}
         <div class="playlist-card">
             <h2><a href="/playlists/{{ playlist.code }}">{{ playlist.name }}</a></h2>
             <p>Publisher: {{ playlist.publisher.name }}</p>
         </div>
         {% endfor %}
-{% endblock %}
+
+        <nav class="perfil">
+                <ul>
+                        <li><a href="/home">Home</a></li>
+                        <li><a href="/logout">Sair</a></li>
+                </ul>
+            </nav>
+            {% endblock %}
+

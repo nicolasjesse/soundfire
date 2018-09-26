@@ -1,9 +1,9 @@
 {% extends 'main.html' %}
 
 {% block content %}
-        <section class="musics">
-            <h1>Playlist: {{ playlist.name }}</h1>
+<h1>Playlist: {{ playlist.name }}</h1>
             <p>Publisher: {{ playlist.publisher.name }}</p>
+        <section class="musics">
             {% if playlist.musics != None %}
             {% for music in playlist.musics %}
             <div class="music">
@@ -13,16 +13,17 @@
             {% endfor %}
             {% endif %}
         </section>
+        <br/>
+        <hr/>
+        <br/>
+        <h1>Adicionar Música a Playlist</h1>
         <section class="add-music">
             <form method="POST" action="/playlists/{{ playlist.code }}/music/add" enctype="multipart/form-data">
-                <label for="name">Digite o nome da musica: </label>
-                <input type="text" name="name" required />
+                <input type="text" name="name" required placeholder="Digite o nome da musica" />
                 <br/>
-                <label for="artist">Digite o nome do Artista ou Banda: </label>
-                <input type="text" name="artist" required />
+                <input type="text" name="artist" required  placeholder="Digite o nome do Artista ou Banda"/>
                 <br/>
-                <label for="genre">Escolha o genero no qual a musica mais se adequa: </label>
-                <select name="genre" required>
+                <select name="genre" required placeholder="Escolha o genero no qual a musica mais se adequa">
                     {% for genre in genres %}
                     <option value="{{ genre.code }}">{{ genre.description }}</option>
                     {% endfor %}
@@ -32,5 +33,12 @@
                 <br/>
                 <input type="submit" value="Adicionar musica a playlist"/>
             </form>
-            </section>
-{% endblock %}
+        </section>
+
+        <nav class="perfil">
+                <ul>
+                        <li><a href="/home">Home</a></li>
+                        <li><a href="/logout">Sair</a></li>
+                </ul>
+            </nav>
+        {% endblock %}
